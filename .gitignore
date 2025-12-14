@@ -1,0 +1,38 @@
+# --------------------
+# Global/OS Files
+# --------------------
+.DS_Store
+Thumbs.db
+.vscode/
+
+# --------------------
+# Node/npm
+# --------------------
+node_modules
+# Ignore the debug log file that npm creates at the root of your project
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# --------------------
+# Sensitive Configuration Files
+# --------------------
+# Ignore ALL .env files, regardless of location
+**/.env
+**/.env.*
+!.env.sample
+
+# --------------------
+# Frontend (React) Specific
+# Assuming your frontend folder is named 'frontend'
+# --------------------
+/frontend/build
+/frontend/dist
+/frontend/out
+
+# --------------------
+# Backend (Node/Express) Specific
+# Assuming your backend folder is named 'backend'
+# --------------------
+/backend/dist
