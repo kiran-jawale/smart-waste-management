@@ -33,10 +33,10 @@ const Profile = () => {
 // Re-styled InfoRow for a cleaner look
 const InfoRow = ({ label, value }) => (
   <div className="flex flex-col p-4 border-b border-gray-200 dark:border-gray-700">
-    <span className="text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">
+    <span className="text-sm font-medium text-gray-500 dark:text-gray-400 ">
       {label}
     </span>
-    <span className="text-lg font-semibold text-gray-900 dark:text-white capitalize">
+    <span className="text-lg font-semibold text-gray-900 dark:text-white">
       {value}
     </span>
   </div>
