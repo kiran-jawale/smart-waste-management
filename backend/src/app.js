@@ -52,7 +52,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 // 2. The Catch-All Route for React Router
 // This MUST be the absolute last route in your file.
 // If a user requests a route that isn't an API route, send them the React app.
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
