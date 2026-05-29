@@ -1,4 +1,5 @@
-export const LOGO_URL = "../../public/smart-logo.png";
+
+export const LOGO_URL = "/smart-logo.png";
 
 export const content = {
   navLinks: [
@@ -54,37 +55,37 @@ export const content = {
         },
       ],
     },
-    wasteTypes: {
+   wasteTypes: {
       title: "Know Your Waste",
       types: [
         {
           name: "e-Waste",
-          img: "../../../../public/ewaste.jpg",
+          img: "/ewaste.jpg", // Changed
           desc: "Old electronics like phones, chargers, and laptops. Never throw in regular bins.",
         },
         {
           name: "Medical Waste",
-          img: "../../../../public/med.jpeg",
+          img: "/med.jpeg", // Changed
           desc: "Syringes, expired medicine, and bandages. Must be handled by professionals.",
         },
         {
           name: "Harmful Waste",
-          img: "../../../../public/harm.jpeg",
+          img: "/harm.jpeg", // Changed
           desc: "Includes batteries, paint cans, and chemical cleaners. Requires special disposal.",
         },
         {
           name: "Wet Waste",
-          img: "../../../../public/wet.jpg",
+          img: "/wet.jpg", // Changed
           desc: "Kitchen scraps like vegetable peels, fruit, and leftover food. Great for composting.",
         },
         {
           name: "Dry Waste",
-          img: "/../../../../public/dry.jpg",
+          img: "/dry.jpg", // Changed
           desc: "Paper, plastic, glass, and metal. Can be recycled if cleaned and segregated.",
         },
         {
           name: "General Waste",
-          img: "../../../../public/img-any.jpg",
+          img: "/img-any.jpg", // Changed
           desc: "Items that cannot be recycled or composted, like wrappers or sanitary products.",
         },
       ],
