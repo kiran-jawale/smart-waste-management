@@ -45,15 +45,11 @@ app.use('/api/v1/complaints', complaintRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/seed', seedRouter); // <-- 2. Use the new router
 
-// --- Serve Frontend (Vite Build) ---
-// 1. Tell Express to serve the static files from the 'dist' folder
-app.use(express.static(path.join(__dirname, "dist")));
+// Updated code - Note the ".."
+app.use(express.static(path.join(__dirname, "..", "dist")));
 
-// 2. The Catch-All Route for React Router
-// This MUST be the absolute last route in your file.
-// If a user requests a route that isn't an API route, send them the React app.
 app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
 });
 
 export { app };
