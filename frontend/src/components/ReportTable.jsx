@@ -1,18 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {useTheme} from '../contexts/ThemeContext'
 
 const ReportTable = ({
   reports,
   onDeleteReport,
   onRowClick,
-  onStatusChange, // New prop: (reportId, newStatus) => void
-  theme, // Pass theme for input styles
+  onStatusChange,
+  theme,
 }) => {
   const userRole = useSelector((state) => state.auth.user?.role);
   const isAdmin = userRole === "admin";
 
-  // Collectors and Admins can change status
   const canChangeStatus =
     (userRole === "admin" || userRole === "collector") && onStatusChange;
 
@@ -73,8 +71,7 @@ const ReportTable = ({
                   className="px-4 py-3 text-sm"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* NEW: Conditional Status Selector */}
-                  {canChangeStatus ? (
+                   {canChangeStatus ? (
                     <select
                       value={report.status}
                       onChange={(e) =>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import adminService from "../../../services/admin.service";
 import ModalContainer from "../../../components/ModalContainer";
- 
+
 const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
   const [formData, setFormData] = useState({
     name: user.name || "",
@@ -54,20 +54,59 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className={inputStyles}/>
+          <label
+            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className={inputStyles}
+          />
         </div>
         <div>
-          <label className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>Contact</label>
-          <input type="tel" name="contact" value={formData.contact} onChange={handleChange} className={inputStyles}/>
+          <label
+            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+          >
+            Contact
+          </label>
+          <input
+            type="tel"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            className={inputStyles}
+          />
         </div>
         <div>
-          <label className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>Address</label>
-          <input type="text" name="address" value={formData.address} onChange={handleChange} className={inputStyles}/>
+          <label
+            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+          >
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            className={inputStyles}
+          />
         </div>
         <div>
-          <label className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>Role</label>
-          <select name="role" value={formData.role} onChange={handleChange} className={inputStyles}>
+          <label
+            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+          >
+            Role
+          </label>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className={inputStyles}
+          >
             <option value="citizen">Citizen</option>
             <option value="organisation">Organisation</option>
             <option value="collector">Collector</option>
@@ -75,10 +114,18 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
           </select>
         </div>
         <div className="flex justify-end space-x-4 pt-4">
-          <button type="button" onClick={onClose} className={`px-4 py-2 rounded-lg ${theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-200 hover:bg-gray-300"} ${theme === "dark" ? "text-white" : "text-gray-800"} transition-colors`}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={`px-4 py-2 rounded-lg ${theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-200 hover:bg-gray-300"} ${theme === "dark" ? "text-white" : "text-gray-800"} transition-colors`}
+          >
             Cancel
           </button>
-          <button type="submit" disabled={loading} className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 transition-colors">
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 transition-colors"
+          >
             {loading ? "Saving..." : "Save Changes"}
           </button>
         </div>
@@ -87,7 +134,6 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
   );
 };
 
-// --- Main User Management Component ---
 const UserManagement = ({ users, theme, onFetchData }) => {
   const [userSearch, setUserSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,7 +144,7 @@ const UserManagement = ({ users, theme, onFetchData }) => {
       ? "border-gray-600 bg-gray-700 text-white"
       : "border-gray-300 bg-gray-50 text-gray-900"
   }`;
-  
+
   const openEditModal = (userToEdit) => {
     setEditingUser(userToEdit);
     setIsModalOpen(true);
@@ -109,11 +155,15 @@ const UserManagement = ({ users, theme, onFetchData }) => {
   };
   const handleUpdateSuccess = () => {
     closeModal();
-    onFetchData(); // Refresh list
+    onFetchData();
   };
-  
+
   const handleDeleteUser = async (id) => {
-    if (window.confirm("Are you sure you want to PERMANENTLY delete this user? This action cannot be undone.")) {
+    if (
+      window.confirm(
+        "Are you sure you want to PERMANENTLY delete this user? This action cannot be undone."
+      )
+    ) {
       try {
         await adminService.deleteUser(id);
         onFetchData();
@@ -122,7 +172,7 @@ const UserManagement = ({ users, theme, onFetchData }) => {
       }
     }
   };
-  
+
   const filteredUsers = users.filter(
     (u) =>
       u.name.toLowerCase().includes(userSearch.toLowerCase()) ||
@@ -131,8 +181,12 @@ const UserManagement = ({ users, theme, onFetchData }) => {
 
   return (
     <>
-      <div className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}>
-        <h2 className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+      <div
+        className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
+      >
+        <h2
+          className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+        >
           User Management
         </h2>
         <input
@@ -149,24 +203,42 @@ const UserManagement = ({ users, theme, onFetchData }) => {
                 className={`p-4 ${theme === "dark" ? "bg-gray-700" : "bg-gray-50"} rounded-lg flex flex-col sm:flex-row justify-between sm:items-center`}
               >
                 <div>
-                  <span className={`font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{u.name}</span>
-                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"} sm:ml-2`}>({u.email})</span>
+                  <span
+                    className={`font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+                  >
+                    {u.name}
+                  </span>
+                  <span
+                    className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"} sm:ml-2`}
+                  >
+                    ({u.email})
+                  </span>
                 </div>
                 <div className="flex items-center space-x-4 mt-2 sm:mt-0">
-                  <span className={`text-sm font-medium capitalize ${theme === "dark" ? "text-green-400" : "text-green-600"}`}>
+                  <span
+                    className={`text-sm font-medium capitalize ${theme === "dark" ? "text-green-400" : "text-green-600"}`}
+                  >
                     {u.role}
                   </span>
-                  {u.role !== 'admin' ? (
+                  {u.role !== "admin" ? (
                     <>
-                      <button onClick={() => openEditModal(u)} className={`text-sm font-medium ${theme === "dark" ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-800"}`}>
+                      <button
+                        onClick={() => openEditModal(u)}
+                        className={`text-sm font-medium ${theme === "dark" ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-800"}`}
+                      >
                         Edit
                       </button>
-                      <button onClick={() => handleDeleteUser(u._id)} className={`text-sm font-medium ${theme === "dark" ? "text-red-400 hover:text-red-300" : "text-red-600 hover:text-red-800"}`}>
+                      <button
+                        onClick={() => handleDeleteUser(u._id)}
+                        className={`text-sm font-medium ${theme === "dark" ? "text-red-400 hover:text-red-300" : "text-red-600 hover:text-red-800"}`}
+                      >
                         Delete
                       </button>
                     </>
                   ) : (
-                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
+                    <span
+                      className={`text-xs font-medium ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}
+                    >
                       (No Actions)
                     </span>
                   )}
@@ -174,13 +246,15 @@ const UserManagement = ({ users, theme, onFetchData }) => {
               </li>
             ))
           ) : (
-            <p className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-center py-4`}>
+            <p
+              className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-center py-4`}
+            >
               No users found.
             </p>
           )}
         </div>
       </div>
-      
+
       {isModalOpen && (
         <EditUserModal
           user={editingUser}

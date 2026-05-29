@@ -9,7 +9,6 @@ import ComplaintManagement from "../parts/ComplaintManagement.jsx";
 import UserManagement from "../parts/UserManagement.jsx";
 import ReportManagement from "../parts/ReportManagement.jsx";
 
-
 const AdminDashboard = ({ user }) => {
   const { theme } = useContext(ThemeContext);
   const location = useLocation();
@@ -18,15 +17,15 @@ const AdminDashboard = ({ user }) => {
   const [allReports, setAllReports] = useState([]);
   const [allComplaints, setAllComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
- 
-  const [view, setView] = useState('complaints');
+
+  const [view, setView] = useState("complaints");
 
   useEffect(() => {
     const hash = location.hash.replace("#", "");
     if (hash) {
       setView(hash);
     } else {
-      setView("complaints"); 
+      setView("complaints");
     }
   }, [location.hash]);
 
@@ -72,7 +71,7 @@ const AdminDashboard = ({ user }) => {
       </h1>
 
       {view === "complaints" && (
-        <ComplaintManagement 
+        <ComplaintManagement
           complaints={allComplaints}
           theme={theme}
           onFetchData={fetchData}
@@ -81,7 +80,7 @@ const AdminDashboard = ({ user }) => {
       )}
 
       {view === "users" && (
-        <UserManagement 
+        <UserManagement
           users={allUsers}
           theme={theme}
           onFetchData={fetchData}
@@ -89,15 +88,15 @@ const AdminDashboard = ({ user }) => {
       )}
 
       {view === "reports" && (
-        <ReportManagement 
+        <ReportManagement
           reports={allReports}
           theme={theme}
           onFetchData={fetchData}
           userRole={user.role}
         />
       )}
-      
-      {view === 'create-report' && (
+
+      {view === "create-report" && (
         <ReportForm user={user} onSuccess={fetchData} />
       )}
     </div>

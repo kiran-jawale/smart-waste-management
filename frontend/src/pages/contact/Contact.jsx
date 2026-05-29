@@ -1,4 +1,3 @@
-// /src/pages/contact/Contact.jsx
 import React, { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { content } from "../../constants/content";

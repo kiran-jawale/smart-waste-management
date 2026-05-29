@@ -1,7 +1,6 @@
 import React from "react";
 import { content } from "../../../constants/content";
 
-
 const WasteTypesSection = () => {
   const { title, types } = content.home.wasteTypes;
   return (

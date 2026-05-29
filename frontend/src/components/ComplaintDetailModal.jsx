@@ -10,8 +10,9 @@ const ComplaintDetailModal = ({ complaint, onClose }) => {
 
   const images = [complaint.image1, complaint.image2, complaint.image3]
     .filter(Boolean)
-    .map((imgPath) =>
-      `${API_BASE_URL}/${imgPath.replace(/\\/g, "/").replace("public/", "")}`
+    .map(
+      (imgPath) =>
+        `${API_BASE_URL}/${imgPath.replace(/\\/g, "/").replace("public/", "")}`
     );
 
   return (
@@ -46,7 +47,7 @@ const ComplaintDetailModal = ({ complaint, onClose }) => {
     </ModalContainer>
   );
 };
- 
+
 const InfoRow = ({ label, value }) => (
   <div className="flex flex-col border-b border-gray-200 dark:border-gray-700 pb-2">
     <span className="text-xs font-medium text-gray-500 dark:text-gray-400 capitalize">

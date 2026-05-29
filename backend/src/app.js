@@ -2,6 +2,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { CORS_ORIGIN } from "./constants.js";
+import dotenv from 'dotenv';
+
+// Configure environment variables first
+dotenv.config({
+  path: './.env',
+});
 
 const app = express();
 

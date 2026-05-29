@@ -10,14 +10,18 @@ const Dashboard = () => {
   const user = useSelector((state) => state.auth.user);
 
   if (!user) {
-     return (
+    return (
       <div className="flex justify-center items-center h-64">
-        <div className={`text-2xl ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Loading user data...</div>
+        <div
+          className={`text-2xl ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+        >
+          Loading user data...
+        </div>
       </div>
     );
   }
 
-   switch (user.role) {
+  switch (user.role) {
     case "admin":
       return <AdminDashboard user={user} />;
     case "collector":
@@ -26,7 +30,11 @@ const Dashboard = () => {
     case "organisation":
       return <UserDashboard user={user} />;
     default:
-      return <div className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Invalid user role.</div>;
+      return (
+        <div className={`${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+          Invalid user role.
+        </div>
+      );
   }
 };
 

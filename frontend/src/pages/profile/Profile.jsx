@@ -2,12 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Container from "../../components/Container";
 
-// This page just displays the user's info from Redux
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
 
   if (!user) {
-    return <Container><div>Loading profile...</div></Container>;
+    return (
+      <Container>
+        <div>Loading profile...</div>
+      </Container>
+    );
   }
 
   return (
@@ -30,7 +33,6 @@ const Profile = () => {
   );
 };
 
-// Re-styled InfoRow for a cleaner look
 const InfoRow = ({ label, value }) => (
   <div className="flex flex-col p-4 border-b border-gray-200 dark:border-gray-700">
     <span className="text-sm font-medium text-gray-500 dark:text-gray-400 ">

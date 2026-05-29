@@ -7,18 +7,16 @@ const ModalContainer = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black bg-opacity-70 z-40 flex justify-center items-center p-4"
       onClick={onClose}
     >
-
       <div
         className={`p-6 md:p-8 ${
           theme === "dark" ? "bg-gray-800" : "bg-white"
         } rounded-2xl shadow-xl w-full max-w-4xl relative max-h-[90vh] overflow-y-auto`}
-        onClick={(e) => e.stopPropagation()} 
+        onClick={(e) => e.stopPropagation()}
       >
- 
         <button
           onClick={onClose}
           className={`absolute top-4 right-4 text-3xl font-bold ${
@@ -29,8 +27,7 @@ const ModalContainer = ({ isOpen, onClose, children }) => {
         >
           &times;
         </button>
-        
-      
+
         {children}
       </div>
     </div>
@@ -38,5 +35,3 @@ const ModalContainer = ({ isOpen, onClose, children }) => {
 };
 
 export default ModalContainer;
-
- 

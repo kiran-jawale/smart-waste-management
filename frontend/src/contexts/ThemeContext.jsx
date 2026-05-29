@@ -1,10 +1,10 @@
- import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
+    () => localStorage.getItem("theme") || "dark"
   );
 
   useEffect(() => {
@@ -22,4 +22,4 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext)
+export const useTheme = () => useContext(ThemeContext);

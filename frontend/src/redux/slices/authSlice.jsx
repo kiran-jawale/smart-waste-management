@@ -1,21 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  status: false, // User is not authenticated
-  user: null,    // No user data
+  status: false,  
+  user: null,     
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // This action is dispatched when a user successfully logs in
-    login: (state, action) => {
+     login: (state, action) => {
       state.status = true;
-      state.user = action.payload; // The user object (e.g., { name, email, role })
+      state.user = action.payload; 
     },
-    // This action is dispatched on logout
-    logout: (state) => {
+     logout: (state) => {
       state.status = false;
       state.user = null;
     },

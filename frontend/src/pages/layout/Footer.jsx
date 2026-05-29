@@ -11,7 +11,9 @@ const Footer = () => {
             <Link to="/" className="text-2xl font-bold text-green-500">
               SmartPeepal
             </Link>
-            <p className="text-sm mt-2">Reshaping our future, one bin at a time.</p>
+            <p className="text-sm mt-2">
+              Reshaping our future, one bin at a time.
+            </p>
           </div>
           <div className="flex space-x-6">
             {content.footerLinks.map((link) => (
@@ -26,7 +28,9 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-700 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} SmartPeepal. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} SmartPeepal. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { content } from "../../../constants/content";
-import LogButton from "../../../components/LogButton"; // Import LogButton
+import LogButton from "../../../components/LogButton"; 
 
 const HeroSection = () => {
   const { title, subtitle, buttons } = content.home.hero;
@@ -18,10 +18,11 @@ const HeroSection = () => {
             {subtitle}
           </p>
         </div>
-        
-        {/* Right Side: Buttons */}
-        <div className="flex flex-col space-y-4 p-8 bg-white rounded-2xl shadow-xl">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Get Started</h3>
+
+         <div className="flex flex-col space-y-4 p-8 bg-white rounded-2xl shadow-xl">
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            Get Started
+          </h3>
           {buttons.map((btn) => (
             <Link
               key={btn.title}
@@ -35,8 +36,7 @@ const HeroSection = () => {
               {btn.title}
             </Link>
           ))}
-          {/* We include the LogButton separately */}
-          <LogButton />
+           <LogButton />
         </div>
       </div>
     </div>

@@ -62,7 +62,7 @@ const ReportDetailModal = ({ report, onClose }) => {
   );
 };
 
- const InfoRow = ({ label, value }) => (
+const InfoRow = ({ label, value }) => (
   <div className="flex flex-col border-b border-gray-200 dark:border-gray-700 pb-2">
     <span className="text-xs font-medium text-gray-500 dark:text-gray-400 capitalize">
       {label}

@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/authSlice";
 import userService from "../services/user.service";
-import { ThemeContext} from "../contexts/ThemeContext"
-
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const LogButton = () => {
   const { theme } = useContext(ThemeContext);
@@ -27,7 +26,7 @@ const LogButton = () => {
     navigate("/auth");
   };
 
-  const baseButtonStyles = `px-4 py-2 font-semibold rounded-lg shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${theme === 'dark' ? 'dark:focus:ring-offset-gray-900' : ''}`;
+  const baseButtonStyles = `px-4 py-2 font-semibold rounded-lg shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${theme === "dark" ? "dark:focus:ring-offset-gray-900" : ""}`;
 
   return authStatus ? (
     <button

@@ -1,5 +1,3 @@
- 
-
 export const areaOptions = [
   { code: "CHH000N1", address: "Chhatrapati Nagar Area 1" },
   { code: "CHH000N2", address: "Chhatrapati Nagar Area 2" },
@@ -67,7 +65,7 @@ export const categoryOptions = [
   "medical-waste",
   "harmful-waste",
   "non-harmful-dry-waste",
-  "non-harmful-wet-waste"
+  "non-harmful-wet-waste",
 ];
 
 export const reasonOptions = [

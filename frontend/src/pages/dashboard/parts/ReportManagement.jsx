@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { areaOptions } from "../../../constants/forms";
 import ReportTable from "../../../components/ReportTable";
@@ -15,7 +15,7 @@ const ReportManagement = ({ reports, theme, onFetchData, userRole }) => {
       ? "border-gray-600 bg-gray-700 text-white"
       : "border-gray-300 bg-gray-50 text-gray-900"
   }`;
-  
+
   const handleDeleteReport = async (id) => {
     if (window.confirm("Are you sure you want to delete this report?")) {
       try {
@@ -26,7 +26,7 @@ const ReportManagement = ({ reports, theme, onFetchData, userRole }) => {
       }
     }
   };
-  
+
   const handleUpdateReportStatus = async (id, status) => {
     try {
       await reportService.updateReport(id, { status });
@@ -35,42 +35,56 @@ const ReportManagement = ({ reports, theme, onFetchData, userRole }) => {
       console.error("Failed to update status:", error);
     }
   };
-  
+
   const filteredReports = reports.filter((r) => {
-    const statusMatch = reportStatusFilter === "all" || r.status === reportStatusFilter;
-    const areaMatch = reportAreaFilter === "all" || r.areacode === reportAreaFilter;
+    const statusMatch =
+      reportStatusFilter === "all" || r.status === reportStatusFilter;
+    const areaMatch =
+      reportAreaFilter === "all" || r.areacode === reportAreaFilter;
     return statusMatch && areaMatch;
   });
 
   return (
     <>
-      <div className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}>
-        <h2 className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+      <div
+        className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
+      >
+        <h2
+          className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+        >
           Waste Records
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <select onChange={(e) => setReportStatusFilter(e.target.value)} className={inputStyles}>
+          <select
+            onChange={(e) => setReportStatusFilter(e.target.value)}
+            className={inputStyles}
+          >
             <option value="all">All Statuses</option>
             <option value="scheduled">Scheduled</option>
             <option value="collected">Collected</option>
             <option value="departed">Departed</option>
           </select>
-          <select onChange={(e) => setReportAreaFilter(e.target.value)} className={inputStyles}>
+          <select
+            onChange={(e) => setReportAreaFilter(e.target.value)}
+            className={inputStyles}
+          >
             <option value="all">All Areas</option>
             {areaOptions.map((opt) => (
-              <option key={opt.code} value={opt.code}>{opt.code}</option>
+              <option key={opt.code} value={opt.code}>
+                {opt.code}
+              </option>
             ))}
           </select>
         </div>
         <ReportTable
           reports={filteredReports}
           theme={theme}
-          onDeleteReport={userRole === 'admin' ? handleDeleteReport : undefined} // Only pass delete if admin
+          onDeleteReport={userRole === "admin" ? handleDeleteReport : undefined} 
           onRowClick={(report) => setSelectedReport(report)}
           onStatusChange={handleUpdateReportStatus}
         />
       </div>
-      
+
       {selectedReport && (
         <ReportDetailModal
           report={selectedReport}

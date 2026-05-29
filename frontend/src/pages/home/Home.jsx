@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import HeroSection from "./parts/HeroSection";
 import WhatWhySection from "./parts/WhatWhySection";
 import HowToUseSection from "./parts/HowToUseSection";
@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="flex flex-col">
       <HeroSection />
-       <WhatWhySection 
+      <WhatWhySection
         title={whatWhy.title}
         what={whatWhy.what}
         why={whatWhy.why}
