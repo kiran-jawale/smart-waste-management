@@ -9,11 +9,11 @@ import {
   ACCESS_TOKEN_EXPIRY,
   REFRESH_TOKEN_SECRET,
   REFRESH_TOKEN_EXPIRY,
-  ADMIN_SECRET_CODE, // Add this to constants.js
-  COLLECTOR_SECRET_CODE, // Add this to constants.js
+  ADMIN_SECRET_CODE,  
+  COLLECTOR_SECRET_CODE,  
 } from "../constants.js";
-
-// --- Helper Function to Generate Tokens ---
+import { withMetrics } from "../utils/metrics.logger.js";
+ 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -27,17 +27,13 @@ const generateAccessAndRefreshTokens = async (userId) => {
       REFRESH_TOKEN_SECRET,
       { expiresIn: REFRESH_TOKEN_EXPIRY }
     );
-    // Note: You would typically save the refreshToken in the user model
-    // user.refreshToken = refreshToken;
-    // await user.save({ validateBeforeSave: false });
-
+ 
     return { accessToken, refreshToken };
   } catch (error) {
     throw new ApiError(500, "Something went wrong while generating tokens");
   }
 };
-
-// --- Helper Function to Generate Unique 10-Digit Code ---
+ 
 const generateUniqueUserCode = async () => {
   let code;
   let isUnique = false;
@@ -50,11 +46,9 @@ const generateUniqueUserCode = async () => {
   }
   return code;
 };
-
-// --- Controller Functions ---
+ 
 
 export const registerUser = asyncHandler(async (req, res) => {
-  // 1. Get user data
   const {
     name,
     email,
@@ -63,24 +57,21 @@ export const registerUser = asyncHandler(async (req, res) => {
     areacode,
     address,
     status,
-    code, // This is the optional code for admin/collector
+    code, 
   } = req.body;
 
-  // 2. Validate required fields
   if (
     [name, email, password, contact, areacode, address].some((f) => !f?.trim())
   ) {
     throw new ApiError(400, "All required fields must be filled");
   }
 
-  // 3. Check if user already exists (by email OR name)
   const existingUser = await User.findOne({ $or: [{ email }, { name }] });
   if (existingUser) {
     throw new ApiError(409, "User with this email or name already exists");
   }
 
-  // 4. Determine user role
-  let role = "citizen"; // Default role
+  let role = "citizen"; 
   if (status && status.trim() !== "") {
     role = "organisation";
   } else if (code) {
@@ -91,63 +82,60 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
   }
 
-  // 5. Generate the unique 10-digit user code
   const userCode = await generateUniqueUserCode();
 
-  // 6. Create new user object
-  const user = await User.create({
-    code: userCode,
-    name,
-    email,
-    password, // Password will be hashed by the 'pre-save' hook in the model
-    contact,
-    areacode,
-    address,
-    role,
-    status: status || "",
-  });
+  const user = await withMetrics(
+      "DB | Create User | filter: none",
+      () => User.create({
+        code: userCode,
+        name,
+        email,
+        password,
+        contact,
+        areacode,
+        address,
+        role,
+        status: status || "",
+      })
+  );
 
-  // 7. Get the created user (without password)
-  const createdUser = await User.findById(user._id).select("-password");
+  const createdUser = await User.findById(user._id).select("-password")
   if (!createdUser) {
     throw new ApiError(500, "Failed to register user");
   }
 
-  // 8. Return successful response
   return res
     .status(201)
     .json(new ApiResponse(201, createdUser, "User registered successfully"));
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
-  // 1. Get login credentials
-  const { loginIdentifier, password } = req.body; // 'loginIdentifier' can be email or name
+  const { loginIdentifier, password } = req.body;  
 
-  // 2. Validate
   if (!loginIdentifier || !password) {
     throw new ApiError(400, "Email/Name and password are required");
   }
 
-  // 3. Find user by email OR name
-  const user = await User.findOne({
-    $or: [{ email: loginIdentifier }, { name: loginIdentifier }],
-  });
+  const user = await withMetrics(
+      "DB | Login User Check | filter: email or name",
+      () => User.findOne({
+        $or: [{ email: loginIdentifier }, { name: loginIdentifier }],
+      })
+  );
+
   if (!user) {
     throw new ApiError(404, "User not found");
   }
 
-  // 4. Compare password
   const isPasswordMatch = await user.comparePassword(password);
   if (!isPasswordMatch) {
     throw new ApiError(401, "Invalid user credentials");
   }
 
-  // 5. Generate tokens
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     user._id
   );
 
-  // 6. Send cookies and response
   const loggedInUser = await User.findById(user._id).select("-password");
 
   return res
@@ -161,12 +149,9 @@ export const loginUser = asyncHandler(async (req, res) => {
         "User logged in successfully"
       )
     );
-});
+})
 
 export const logoutUser = asyncHandler(async (req, res) => {
-  // We would also clear the refreshToken from the DB here
-  // await User.findByIdAndUpdate(req.user._id, { $set: { refreshToken: undefined } });
-
   return res
     .status(200)
     .clearCookie("accessToken", COOKIE_OPTIONS)
@@ -175,32 +160,33 @@ export const logoutUser = asyncHandler(async (req, res) => {
 });
 
 export const getMyProfile = asyncHandler(async (req, res) => {
-  // `req.user` is already populated by the `isVerified` middleware
   return res
     .status(200)
     .json(
       new ApiResponse(200, req.user, "User profile fetched successfully")
     );
 });
+
 export const updateMyProfile = asyncHandler(async (req, res) => {
-  // Added email, areacode, and status
   const { name, contact, address, status, email, areacode } = req.body;
 
-  // Find user and update (only non-sensitive fields)
-  const user = await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $set: {
-        name,
-        contact,
-        address,
-        status,
-        email,    // Added email
-        areacode, // Added areacode
-      },
-    },
-    { new: true, runValidators: true } // Return the updated document and run schema validators
-  ).select("-password");
+  const user = await withMetrics(
+      "DB | Update own data | filter: byId",
+      () => User.findByIdAndUpdate(
+        req.user._id,
+        {
+          $set: {
+            name,
+            contact,
+            address,
+            status,
+            email,    
+            areacode, 
+          },
+        },
+        { new: true, runValidators: true }
+      ).select("-password")
+  );
 
   if (!user) {
     throw new ApiError(404, "User not found");
@@ -211,7 +197,6 @@ export const updateMyProfile = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Profile updated successfully"));
 });
 
-// --- NEW CONTROLLER ---
 export const changePassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
@@ -219,22 +204,22 @@ export const changePassword = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Old password and new password are required");
   }
 
-  // 1. Find the user from the verified request
   const user = await User.findById(req.user._id);
   if (!user) {
     throw new ApiError(404, "User not found");
   }
 
-  // 2. Compare the old password
   const isPasswordMatch = await user.comparePassword(oldPassword);
   if (!isPasswordMatch) {
     throw new ApiError(401, "Invalid old password");
   }
 
-  // 3. Set and save the new password
-  // (The pre-save hook in User.js will automatically hash it)
   user.password = newPassword;
-  await user.save({ validateBeforeSave: false }); // Skip other validations
+  
+  await withMetrics(
+      "DB | Change Password Save | filter: none",
+      () => user.save({ validateBeforeSave: false })
+  );
 
   return res
     .status(200)

@@ -2,11 +2,15 @@ import { User } from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { withMetrics } from "../utils/metrics.logger.js";
 
 export const getAllUsers = asyncHandler(async (req, res) => {
    const filter = req.query.role ? { role: req.query.role } : {};
 
-  const users = await User.find(filter).select("-password");
+  const users = await withMetrics(
+      "DB | Get all Users | Admin | filter: role ",
+      () => User.find(filter).select("-password")
+  );
 
   return res
     .status(200)
@@ -14,7 +18,10 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 export const getUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).select("-password");
+  const user = await withMetrics(
+      "DB | Get User By ID | Admin | filter: byId",
+      () => User.findById(req.params.id).select("-password")
+  );
 
   if (!user) {
     throw new ApiError(404, "User not found");
@@ -26,15 +33,13 @@ export const getUserById = asyncHandler(async (req, res) => {
 });
 
 export const updateUser = asyncHandler(async (req, res) => {
-  const { id } = req.params; // ID of user to update
+  const { id } = req.params; 
   
-  // 1. Find the user being updated
   const userToUpdate = await User.findById(id);
   if (!userToUpdate) {
     throw new ApiError(404, "User not found");
   }
 
-  // 2. DEADLOCK CHECK: Prevent admin from editing another admin
   if (userToUpdate.role === "admin" && req.user._id.toString() !== id) {
     throw new ApiError(403, "Admins cannot edit other admins.");
   }
@@ -43,11 +48,14 @@ export const updateUser = asyncHandler(async (req, res) => {
   const updateData = { name, contact, address, areacode, role, status };
   Object.keys(updateData).forEach(key => updateData[key] === undefined && delete updateData[key]);
 
-  const updatedUser = await User.findByIdAndUpdate(
-    id,
-    { $set: updateData },
-    { new: true, runValidators: true }
-  ).select("-password");
+  const updatedUser = await withMetrics(
+      "DB | Update User | Admin | filter: byId",
+      () => User.findByIdAndUpdate(
+        id,
+        { $set: updateData },
+        { new: true, runValidators: true }
+      ).select("-password")
+  );
 
   return res
     .status(200)
@@ -55,25 +63,25 @@ export const updateUser = asyncHandler(async (req, res) => {
 });
 
 export const deleteUser = asyncHandler(async (req, res) => {
-  const { id } = req.params; // ID of user to delete
+  const { id } = req.params; 
 
-  // 1. DEADLOCK CHECK: Prevent admin from deleting themselves
   if (req.user._id.toString() === id) {
     throw new ApiError(403, "You cannot delete your own account.");
   }
 
-  // 2. Find the user being deleted
   const userToDelete = await User.findById(id);
   if (!userToDelete) {
     throw new ApiError(404, "User not found");
   }
 
-  // 3. DEADLOCK CHECK: Prevent admin from deleting another admin
   if (userToDelete.role === "admin") {
     throw new ApiError(403, "Admins cannot delete other admins.");
   }
   
-  await User.findByIdAndDelete(id);
+  await withMetrics(
+      "DB | Delete User | Admin | filter: byId",
+      () => User.findByIdAndDelete(id)
+  );
 
   return res
     .status(200)
