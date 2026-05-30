@@ -10,8 +10,8 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
 
   const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
     theme === "dark"
-      ? "border-gray-600 bg-gray-700 text-white"
-      : "border-gray-300 bg-gray-50 text-gray-900"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400"
   }`;
 
   const handleUpdateComplaintStatus = async (id, status) => {
@@ -50,11 +50,13 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
   return (
     <>
       <div
-        className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
+        className={`p-6 md:p-8 rounded-2xl shadow-xl transition-colors duration-300 ${
+          theme === "dark"
+            ? "bg-slate-800 text-white"
+            : "bg-white text-gray-900"
+        }`}
       >
-        <h2
-          className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
-        >
+        <h2 className="text-2xl font-semibold mb-5">
           All Complaints
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -79,20 +81,26 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
             filteredComplaints.map((c) => (
               <div
                 key={c._id}
-                className={`p-4 ${theme === "dark" ? "bg-gray-700" : "bg-gray-50"} rounded-lg flex flex-col sm:flex-row justify-between sm:items-center`}
+                className={`p-4 rounded-lg flex flex-col sm:flex-row justify-between sm:items-center transition-colors duration-300 ${
+                  theme === "dark"
+                    ? "bg-slate-700 hover:bg-slate-600"
+                    : "bg-gray-50 hover:bg-gray-100"
+                }`}
               >
                 <button
                   onClick={() => setSelectedComplaint(c)}
                   className="text-left w-full sm:w-auto"
                 >
                   <span
-                    className={`font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+                    className={`font-semibold transition-colors duration-300 ${
+                      theme === "dark" ? "text-white" : "text-gray-900"
+                    }`}
                   >
                     {c.subject}
                   </span>
-                  <p
-                    className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}
-                  >
+                  <p className={`text-sm transition-colors duration-300 ${
+                    theme === "dark" ? "text-slate-400" : "text-gray-600"
+                  }`}>
                     {c.address}
                   </p>
                 </button>
@@ -115,7 +123,11 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
                         e.stopPropagation();
                         handleDeleteComplaint(c._id);
                       }}
-                      className={`text-sm font-medium ${theme === "dark" ? "text-red-400 hover:text-red-300" : "text-red-600 hover:text-red-800"}`}
+                      className={`text-sm font-medium transition-colors duration-300 ${
+                        theme === "dark"
+                          ? "text-red-400 hover:text-red-300"
+                          : "text-red-600 hover:text-red-800"
+                      }`}
                     >
                       Delete
                     </button>
@@ -125,7 +137,9 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
             ))
           ) : (
             <p
-              className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
+              className={`transition-colors duration-300 ${
+                theme === "dark" ? "text-slate-400" : "text-gray-500"
+              }`}
             >
               No complaints found.
             </p>

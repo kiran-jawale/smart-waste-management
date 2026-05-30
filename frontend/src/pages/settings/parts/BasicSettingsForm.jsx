@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 import { login } from "../../../redux/slices/authSlice";
 import userService from "../../../services/user.service";
 import { areaOptions } from "../../../constants/forms";
 
 const BasicSettingsForm = () => {
+  const { theme } = useContext(ThemeContext);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -44,8 +46,11 @@ const BasicSettingsForm = () => {
     }
   };
 
-  const inputStyles =
-    "mt-1 block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all";
+  const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${
+    theme === "dark"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+  }`;
 
   return (
     <div className="rounded-3xl border border-gray-200 bg-white p-8 md:p-10 shadow-sm dark:border-slate-700 dark:bg-slate-800">
@@ -73,7 +78,9 @@ const BasicSettingsForm = () => {
 
       <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
+          <label className={`mb-2 block text-sm font-medium transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-200" : "text-gray-700"
+          }`}>
             Full Name
           </label>
 
@@ -88,7 +95,9 @@ const BasicSettingsForm = () => {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
+          <label className={`mb-2 block text-sm font-medium transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-200" : "text-gray-700"
+          }`}>
             Email
           </label>
 
@@ -103,7 +112,9 @@ const BasicSettingsForm = () => {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
+          <label className={`mb-2 block text-sm font-medium transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-200" : "text-gray-700"
+          }`}>
             Contact Number
           </label>
 
@@ -118,7 +129,9 @@ const BasicSettingsForm = () => {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
+          <label className={`mb-2 block text-sm font-medium transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-200" : "text-gray-700"
+          }`}>
             Full Address
           </label>
 
@@ -133,7 +146,9 @@ const BasicSettingsForm = () => {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
+          <label className={`mb-2 block text-sm font-medium transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-200" : "text-gray-700"
+          }`}>
             Area Code
           </label>
 
@@ -153,7 +168,9 @@ const BasicSettingsForm = () => {
 
         {user.role === "organisation" && (
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
+            <label className={`mb-2 block text-sm font-medium transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-200" : "text-gray-700"
+          }`}>
               Organisation Type (e.g., Hospital, School)
             </label>
 

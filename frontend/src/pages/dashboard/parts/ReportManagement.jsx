@@ -12,8 +12,8 @@ const ReportManagement = ({ reports, theme, onFetchData, userRole }) => {
 
   const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
     theme === "dark"
-      ? "border-gray-600 bg-gray-700 text-white"
-      : "border-gray-300 bg-gray-50 text-gray-900"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400"
   }`;
 
   const handleDeleteReport = async (id) => {
@@ -47,11 +47,13 @@ const ReportManagement = ({ reports, theme, onFetchData, userRole }) => {
   return (
     <>
       <div
-        className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
+        className={`p-6 md:p-8 rounded-2xl shadow-xl transition-colors duration-300 ${
+          theme === "dark"
+            ? "bg-slate-800 text-white"
+            : "bg-white text-gray-900"
+        }`}
       >
-        <h2
-          className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
-        >
+        <h2 className="text-2xl font-semibold mb-5">
           Waste Records
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

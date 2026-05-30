@@ -44,9 +44,13 @@ const ReportForm = ({ user, onSuccess }) => {
     fetchUsers();
   }, []);
 
-  const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${theme === "dark" ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-gray-50 text-gray-900"}`;
+  const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
+    theme === "dark"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+  }`;
   const buttonStyles =
-    "w-full sm:w-auto px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 disabled:bg-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800";
+    "w-full sm:w-auto px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 disabled:bg-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,21 +85,31 @@ const ReportForm = ({ user, onSuccess }) => {
 
   return (
     <div
-      className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
+      className={`p-6 md:p-8 rounded-2xl shadow-xl transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-slate-800 text-white"
+          : "bg-white text-gray-900"
+      }`}
     >
-      <h2
-        className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
-      >
+      <h2 className="text-2xl font-semibold mb-5">
         Create New Waste Report
       </h2>
 
       {error && (
-        <div className="p-3 mb-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        <div className={`p-3 mb-4 rounded-lg border ${
+          theme === "dark"
+            ? "border-red-800 bg-red-950/40 text-red-300"
+            : "border-red-200 bg-red-50 text-red-700"
+        }`}>
           {error}
         </div>
       )}
       {success && (
-        <div className="p-3 mb-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        <div className={`p-3 mb-4 rounded-lg border ${
+          theme === "dark"
+            ? "border-emerald-800 bg-emerald-950/40 text-emerald-300"
+            : "border-emerald-200 bg-emerald-50 text-emerald-700"
+        }`}>
           {success}
         </div>
       )}
@@ -105,14 +119,26 @@ const ReportForm = ({ user, onSuccess }) => {
           <button
             type="button"
             onClick={() => setReportType("area")}
-            className={`flex-1 py-3 font-medium rounded-lg ${reportType === "area" ? "bg-green-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"}`}
+            className={`flex-1 py-3 font-medium rounded-lg transition-colors ${
+              reportType === "area"
+                ? "bg-emerald-600 text-white"
+                : theme === "dark"
+                ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
           >
             Report for Area
           </button>
           <button
             type="button"
             onClick={() => setReportType("user")}
-            className={`flex-1 py-3 font-medium rounded-lg ${reportType === "user" ? "bg-green-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"}`}
+            className={`flex-1 py-3 font-medium rounded-lg transition-colors ${
+              reportType === "user"
+                ? "bg-emerald-600 text-white"
+                : theme === "dark"
+                ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
           >
             Report for User
           </button>
@@ -121,7 +147,9 @@ const ReportForm = ({ user, onSuccess }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label
-              className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+              className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
             >
               Category
             </label>
@@ -139,7 +167,9 @@ const ReportForm = ({ user, onSuccess }) => {
           </div>
           <div>
             <label
-              className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+              className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
             >
               Reason
             </label>
@@ -159,7 +189,9 @@ const ReportForm = ({ user, onSuccess }) => {
 
         <div>
           <label
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
           >
             Area Code
           </label>
@@ -180,7 +212,9 @@ const ReportForm = ({ user, onSuccess }) => {
           <>
             <div>
               <label
-                className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+                className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
               >
                 Citizen / Organisation
               </label>
@@ -202,14 +236,20 @@ const ReportForm = ({ user, onSuccess }) => {
             </div>
             <div>
               <label
-                className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+                className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
               >
                 Image (Optional)
               </label>
               <input
                 type="file"
                 onChange={(e) => setImage(e.target.files[0])}
-                className={`${inputStyles} py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 dark:file:bg-gray-600 dark:file:text-green-300 dark:hover:file:bg-gray-500`}
+                className={`${inputStyles} py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold transition-all ${
+                  theme === "dark"
+                    ? "file:bg-slate-700 file:text-emerald-300 hover:file:bg-slate-600"
+                    : "file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                }`}
               />
             </div>
           </>

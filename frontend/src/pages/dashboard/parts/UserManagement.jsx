@@ -16,8 +16,8 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
 
   const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
     theme === "dark"
-      ? "border-gray-600 bg-gray-700 text-white"
-      : "border-gray-300 bg-gray-50 text-gray-900"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400"
   }`;
 
   const handleChange = (e) => {
@@ -41,21 +41,27 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
   return (
     <ModalContainer isOpen={!!user} onClose={onClose}>
       <h2
-        className={`text-xl font-semibold mb-5 ${
+        className={`text-xl font-semibold mb-5 transition-colors duration-300 ${
           theme === "dark" ? "text-white" : "text-gray-900"
         }`}
       >
         Edit User: {user.name}
       </h2>
       {error && (
-        <div className="p-3 mb-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        <div className={`p-3 mb-4 rounded-lg border ${
+          theme === "dark"
+            ? "border-red-800 bg-red-950/40 text-red-300"
+            : "border-red-200 bg-red-50 text-red-700"
+        }`}>
           {error}
         </div>
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
           >
             Name
           </label>
@@ -69,7 +75,9 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
         </div>
         <div>
           <label
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
           >
             Contact
           </label>
@@ -83,7 +91,9 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
         </div>
         <div>
           <label
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
           >
             Address
           </label>
@@ -97,7 +107,9 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
         </div>
         <div>
           <label
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium transition-colors duration-300 ${
+              theme === "dark" ? "text-slate-200" : "text-gray-700"
+            }`}
           >
             Role
           </label>
@@ -117,7 +129,11 @@ const EditUserModal = ({ user, onClose, onUpdateSuccess, theme }) => {
           <button
             type="button"
             onClick={onClose}
-            className={`px-4 py-2 rounded-lg ${theme === "dark" ? "bg-gray-600 hover:bg-gray-500" : "bg-gray-200 hover:bg-gray-300"} ${theme === "dark" ? "text-white" : "text-gray-800"} transition-colors`}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              theme === "dark"
+                ? "bg-slate-700 hover:bg-slate-600 text-white"
+                : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+            }`}
           >
             Cancel
           </button>
@@ -141,8 +157,8 @@ const UserManagement = ({ users, theme, onFetchData }) => {
 
   const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
     theme === "dark"
-      ? "border-gray-600 bg-gray-700 text-white"
-      : "border-gray-300 bg-gray-50 text-gray-900"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-300 bg-gray-50 text-gray-900 placeholder:text-gray-400"
   }`;
 
   const openEditModal = (userToEdit) => {
@@ -182,11 +198,13 @@ const UserManagement = ({ users, theme, onFetchData }) => {
   return (
     <>
       <div
-        className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
+        className={`p-6 md:p-8 rounded-2xl shadow-xl transition-colors duration-300 ${
+          theme === "dark"
+            ? "bg-slate-800 text-white"
+            : "bg-white text-gray-900"
+        }`}
       >
-        <h2
-          className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
-        >
+        <h2 className="text-2xl font-semibold mb-5">
           User Management
         </h2>
         <input
@@ -200,7 +218,11 @@ const UserManagement = ({ users, theme, onFetchData }) => {
             filteredUsers.map((u) => (
               <li
                 key={u._id}
-                className={`p-4 ${theme === "dark" ? "bg-gray-700" : "bg-gray-50"} rounded-lg flex flex-col sm:flex-row justify-between sm:items-center`}
+                className={`p-4 rounded-lg flex flex-col sm:flex-row justify-between sm:items-center transition-colors duration-300 ${
+                  theme === "dark"
+                    ? "bg-slate-700 hover:bg-slate-600"
+                    : "bg-gray-50 hover:bg-gray-100"
+                }`}
               >
                 <div>
                   <span
@@ -209,7 +231,9 @@ const UserManagement = ({ users, theme, onFetchData }) => {
                     {u.name}
                   </span>
                   <span
-                    className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"} sm:ml-2`}
+                    className={`text-sm transition-colors duration-300 ${
+                      theme === "dark" ? "text-slate-400" : "text-gray-600"
+                    } sm:ml-2`}
                   >
                     ({u.email})
                   </span>
@@ -247,7 +271,9 @@ const UserManagement = ({ users, theme, onFetchData }) => {
             ))
           ) : (
             <p
-              className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-center py-4`}
+              className={`text-center py-4 transition-colors duration-300 ${
+                theme === "dark" ? "text-slate-400" : "text-gray-500"
+              }`}
             >
               No users found.
             </p>

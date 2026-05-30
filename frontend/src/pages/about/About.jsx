@@ -33,7 +33,7 @@ const About = () => {
       </Container>
 
       <div
-        className={`border-y ${
+        className={`border-y transition-colors duration-300 ${
           theme === "dark"
             ? "border-slate-800 bg-slate-900"
             : "border-gray-200 bg-gray-100"
@@ -43,7 +43,6 @@ const About = () => {
           title={whatWhy.title}
           what={whatWhy.what}
           why={whatWhy.why}
-          theme={theme}
         />
       </div>
     </div>

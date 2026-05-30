@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate, useLocation, Link } from "react-router-dom";
 import { logout } from "../redux/slices/authSlice";
+import { ThemeContext } from "../contexts/ThemeContext";
 import userService from "../services/user.service";
 
 const Sidebar = () => {
+  const { theme } = useContext(ThemeContext);
   const user = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
@@ -30,28 +32,48 @@ const Sidebar = () => {
 
   const activeClass = "bg-emerald-600 text-white shadow-md";
 
-  const inactiveClass = "text-slate-300 hover:bg-slate-800 hover:text-white";
+  const inactiveClass = theme === "dark"
+    ? "text-slate-300 hover:bg-slate-800 hover:text-white"
+    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
 
   const baseNavLinkClass =
     "block px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200";
 
   const activeSubLink = "text-emerald-400 font-semibold";
 
-  const inactiveSubLink = "text-slate-400 hover:text-emerald-400";
+  const inactiveSubLink = theme === "dark"
+    ? "text-slate-400 hover:text-emerald-400"
+    : "text-gray-500 hover:text-emerald-600";
 
   return (
-    <aside className="fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-slate-800 bg-[#0f172a] text-white shadow-2xl">
-      <div className="border-b border-slate-800 p-6">
+    <aside className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r transition-colors duration-300 shadow-2xl ${
+      theme === "dark"
+        ? "border-slate-800 bg-[#0f172a] text-white"
+        : "border-gray-200 bg-white text-gray-900"
+    }`}>
+      <div className={`border-b p-6 transition-colors duration-300 ${
+        theme === "dark"
+          ? "border-slate-800"
+          : "border-gray-200"
+      }`}>
         <h2 className="truncate text-lg font-semibold">{user.name}</h2>
 
-        <p className="mt-1 truncate text-sm text-slate-400">{user.email}</p>
+        <p className={`mt-1 truncate text-sm ${
+          theme === "dark" ? "text-slate-400" : "text-gray-600"
+        }`}>{user.email}</p>
 
-        <div className="mt-4 inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold capitalize text-emerald-400">
+        <div className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold capitalize transition-colors duration-300 ${
+          theme === "dark"
+            ? "bg-emerald-500/10 text-emerald-400"
+            : "bg-emerald-100 text-emerald-700"
+        }`}>
           {user.role}
         </div>
       </div>
 
-      <nav className="flex-1 space-y-2 overflow-y-auto p-4">
+      <nav className={`flex-1 space-y-2 overflow-y-auto p-4 ${
+        theme === "dark" ? "border-slate-700" : "border-gray-200"
+      }`}>
         <NavLink
           to="/dashboard"
           className={({ isActive }) =>
@@ -63,7 +85,11 @@ const Sidebar = () => {
 
         {onDashboard &&
           (user.role === "admin" || user.role === "collector") && (
-            <div className="ml-4 space-y-3 border-l border-slate-700 pl-4">
+            <div className={`ml-4 space-y-3 border-l pl-4 transition-colors duration-300 ${
+              theme === "dark"
+                ? "border-slate-700"
+                : "border-gray-200"
+            }`}>
               {user.role === "collector" && (
                 <Link
                   to="/dashboard#create-report"
@@ -129,7 +155,11 @@ const Sidebar = () => {
 
         {onDashboard &&
           (user.role === "citizen" || user.role === "organisation") && (
-            <div className="ml-4 space-y-3 border-l border-slate-700 pl-4">
+            <div className={`ml-4 space-y-3 border-l pl-4 transition-colors duration-300 ${
+              theme === "dark"
+                ? "border-slate-700"
+                : "border-gray-200"
+            }`}>
               <Link
                 to="/dashboard#my-reports"
                 className={`block text-sm transition-colors ${
@@ -185,7 +215,11 @@ const Sidebar = () => {
         </NavLink>
       </nav>
 
-      <div className="border-t border-slate-800 p-4">
+      <div className={`border-t p-4 transition-colors duration-300 ${
+        theme === "dark"
+          ? "border-slate-800"
+          : "border-gray-200"
+      }`}>
         <button
           onClick={handleLogout}
           className="w-full rounded-2xl bg-red-600 px-4 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-red-700"
