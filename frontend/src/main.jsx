@@ -10,12 +10,11 @@ import {
 import { store } from "./redux/redux.js";
 import { Provider } from "react-redux";
 
-
 import { ThemeProvider } from "./contexts/ThemeContext.jsx";
-import "./index.css"; 
+import "./index.css";
 
 import Layout from "./pages/layout/Layout.jsx";
-import AuthLayout from "./pages/AuthLayout.jsx"; 
+import AuthLayout from "./pages/AuthLayout.jsx";
 
 import Home from "./pages/home/Home.jsx";
 import About from "./pages/about/About.jsx";
@@ -32,17 +31,16 @@ import Settings from "./pages/settings/Settings.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      
       <Route path="" element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
       <Route path="terms-and-conditions" element={<Terms />} />
       <Route path="privacy-policy" element={<Privacy />} />
- 
+
       <Route element={<AuthLayout authenticationRequired={false} />}>
         <Route path="auth" element={<Auth />} />
       </Route>
- 
+
       <Route element={<AuthLayout authenticationRequired={true} />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="profile" element={<Profile />} />
@@ -51,14 +49,11 @@ const router = createBrowserRouter(
     </Route>
   )
 );
-
-// Render the App
+ 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  </Provider>
 );

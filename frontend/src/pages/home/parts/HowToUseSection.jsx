@@ -4,7 +4,7 @@ import { content } from "../../../constants/content";
 const HowToUseSection = () => {
   const { title, steps } = content.home.howToUse;
   return (
-    <div className="border-y border-gray-200 bg-gray-100 py-16 md:py-24 dark:border-slate-800 dark:bg-slate-900">
+    <div className="rounded-t-lg rounded-tr-lg border-y border-gray-200 bg-gray-100 py-16 md:py-24 dark:border-slate-800 dark:bg-slate-900">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white md:text-4xl">

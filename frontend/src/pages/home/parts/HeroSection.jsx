@@ -7,7 +7,7 @@ const HeroSection = () => {
   const { title, subtitle, buttons } = content.home.hero;
 
   return (
-    <div className="w-full border-b border-gray-200 bg-gradient-to-br from-gray-50 via-white to-emerald-50 dark:border-slate-800 dark:from-[#0f172a] dark:via-slate-900 dark:to-slate-950">
+    <div className="rounded-md w-full border-b border-gray-200 bg-gradient-to-br from-gray-50 via-white to-emerald-50 dark:border-slate-800 dark:from-[#0f172a] dark:via-slate-900 dark:to-slate-950">
       <div className="container mx-auto grid items-center gap-12 px-4 py-20 md:grid-cols-2 md:py-28">
         <div className="text-center md:text-left">
           <div className="inline-flex rounded-full bg-emerald-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">

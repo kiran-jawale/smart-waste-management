@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { API_BASE_URL } from "../constants/api";
 import ModalContainer from "./ModalContainer";
 
 const ComplaintDetailModal = ({ complaint, onClose }) => {
@@ -8,12 +7,9 @@ const ComplaintDetailModal = ({ complaint, onClose }) => {
 
   if (!complaint) return null;
 
-  const images = [complaint.image1, complaint.image2, complaint.image3]
-    .filter(Boolean)
-    .map(
-      (imgPath) =>
-        `${API_BASE_URL}/${imgPath.replace(/\\/g, "/").replace("public/", "")}`
-    );
+  // FIX: Cloudinary URLs are already absolute paths.
+  // We simply filter out the undefined/null ones.
+  const images = [complaint.image1, complaint.image2, complaint.image3].filter(Boolean);
 
   return (
     <ModalContainer isOpen={!!complaint} onClose={onClose}>
@@ -48,7 +44,7 @@ const ComplaintDetailModal = ({ complaint, onClose }) => {
               <img
                 key={index}
                 src={imgSrc}
-                alt={`Complaint ${index + 1}`}
+                alt={`Complaint Evidence ${index + 1}`}
                 className="h-64 rounded-xl object-cover border border-gray-200 dark:border-slate-700"
               />
             ))}

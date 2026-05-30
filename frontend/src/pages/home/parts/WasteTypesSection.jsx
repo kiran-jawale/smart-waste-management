@@ -4,7 +4,7 @@ import { content } from "../../../constants/content";
 const WasteTypesSection = () => {
   const { title, types } = content.home.wasteTypes;
   return (
-    <div className="bg-white py-16 md:py-24 dark:bg-[#0f172a]">
+    <div className="rounded-bl-lg rounded-br-lg bg-white py-16 md:py-24 dark:bg-[#0f172a]">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white md:text-4xl">

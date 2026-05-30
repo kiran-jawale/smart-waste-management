@@ -1,5 +1,4 @@
-import React, { useState,useContext } from "react";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import React, { useState, useContext } from "react";
 import ComplaintDetailModal from "../../../components/ComplaintDetailModal";
 import complaintService from "../../../services/complaint.service";
 
@@ -26,7 +25,7 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
   const handleDeleteComplaint = async (id) => {
     if (
       window.confirm(
-        "Are you sure you want to PERMANENTLY delete this complaint?"
+        "Are you sure you want to PERMANENTLY delete this complaint? This will also remove associated Cloudinary images."
       )
     ) {
       try {
@@ -56,9 +55,7 @@ const ComplaintManagement = ({ complaints, theme, onFetchData, userRole }) => {
             : "bg-white text-gray-900"
         }`}
       >
-        <h2 className="text-2xl font-semibold mb-5">
-          All Complaints
-        </h2>
+        <h2 className="text-2xl font-semibold mb-5">All Complaints</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <select
             onChange={(e) => setComplaintStatusFilter(e.target.value)}

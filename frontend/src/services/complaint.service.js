@@ -1,4 +1,4 @@
-import api from "./api.js";
+import api from "./axios.js";
 
 class ComplaintService {
   createComplaint(formData) {
