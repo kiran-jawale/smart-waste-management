@@ -82,13 +82,23 @@ const UserDashboard = ({ user }) => {
     }
   };
 
-  const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${theme === "dark" ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-gray-50 text-gray-900"}`;
-  const buttonStyles = `w-full px-4 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`;
+  const inputStyles = `mt-2 block w-full rounded-2xl border px-4 py-3 text-sm shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+    theme === "dark"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+  }`;
+
+  const buttonStyles =
+    "w-full rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500";
 
   if (loading)
     return (
       <div
-        className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-center p-10`}
+        className={`rounded-3xl border px-6 py-10 text-center text-lg font-medium shadow-sm ${
+          theme === "dark"
+            ? "border-slate-700 bg-slate-800 text-white"
+            : "border-gray-200 bg-white text-gray-900"
+        }`}
       >
         Loading dashboard...
       </div>
@@ -96,33 +106,47 @@ const UserDashboard = ({ user }) => {
 
   return (
     <div className="space-y-8">
-      <h1
-        className={`text-4xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}
-      >
-        Welcome, {user.name}!
-      </h1>
+      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <h1
+          className={`text-3xl font-bold tracking-tight ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}
+        >
+          Welcome, {user.name}!
+        </h1>
+
+        <p
+          className={`mt-2 text-sm ${
+            theme === "dark" ? "text-slate-400" : "text-gray-500"
+          }`}
+        >
+          Manage your complaints and waste collection records.
+        </p>
+      </div>
 
       {error && (
-        <div className="p-3 mb-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
           {error}
         </div>
       )}
+
       {success && (
-        <div className="p-3 mb-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
           {success}
         </div>
       )}
 
       {view === "file-complaint" && (
-        <div
-          className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
-        >
+        <div className="rounded-3xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <h2
-            className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+            className={`text-2xl font-semibold ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
           >
             File a Complaint
           </h2>
-          <form onSubmit={handleComplaintSubmit} className="space-y-4">
+
+          <form onSubmit={handleComplaintSubmit} className="mt-6 space-y-5">
             <input
               type="text"
               placeholder="Subject"
@@ -133,6 +157,7 @@ const UserDashboard = ({ user }) => {
               className={inputStyles}
               required
             />
+
             <textarea
               placeholder="Description"
               value={complaintData.description}
@@ -146,6 +171,7 @@ const UserDashboard = ({ user }) => {
               rows="4"
               required
             />
+
             <input
               type="text"
               placeholder="Address"
@@ -156,8 +182,11 @@ const UserDashboard = ({ user }) => {
               className={inputStyles}
               required
             />
+
             <label
-              className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+              className={`block text-sm font-medium ${
+                theme === "dark" ? "text-slate-300" : "text-gray-700"
+              }`}
             >
               Upload Image 1 (Required)
               <input
@@ -172,6 +201,7 @@ const UserDashboard = ({ user }) => {
                 required
               />
             </label>
+
             <button type="submit" className={buttonStyles}>
               Submit Complaint
             </button>
@@ -180,46 +210,57 @@ const UserDashboard = ({ user }) => {
       )}
 
       {view === "my-reports" && (
-        <div
-          className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
-        >
+        <div className="rounded-3xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <h2
-            className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+            className={`text-2xl font-semibold ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
           >
             My Waste Records
           </h2>
-          <ReportTable reports={myReports} theme={theme} />
+
+          <div className="mt-6">
+            <ReportTable reports={myReports} theme={theme} />
+          </div>
         </div>
       )}
 
       {view === "my-complaints" && (
-        <div
-          className={`p-6 md:p-8 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl`}
-        >
+        <div className="rounded-3xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <h2
-            className={`text-2xl font-semibold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+            className={`text-2xl font-semibold ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
           >
             My Complaints
           </h2>
-          <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
+
+          <div className="mt-6 space-y-4">
             {myComplaints.length > 0 ? (
               myComplaints.map((c) => (
                 <div
                   key={c._id}
-                  className={`p-4 border ${theme === "dark" ? "border-gray-700 bg-gray-700" : "border-gray-200 bg-gray-50"} rounded-lg flex justify-between items-center`}
+                  className={`flex flex-col justify-between gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center ${
+                    theme === "dark"
+                      ? "border-slate-700 bg-slate-900"
+                      : "border-gray-200 bg-gray-50"
+                  }`}
                 >
                   <span
-                    className={`font-medium ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
+                    className={`font-medium ${
+                      theme === "dark" ? "text-white" : "text-gray-900"
+                    }`}
                   >
                     {c.subject}
                   </span>
+
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    className={`inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold ${
                       c.status === "pending"
-                        ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                        ? "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300"
                         : c.status === "in-progress"
-                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-                          : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                          ? "bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300"
+                          : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
                     }`}
                   >
                     {c.status}
@@ -228,7 +269,9 @@ const UserDashboard = ({ user }) => {
               ))
             ) : (
               <p
-                className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
+                className={`text-sm ${
+                  theme === "dark" ? "text-slate-400" : "text-gray-500"
+                }`}
               >
                 No complaints filed.
               </p>

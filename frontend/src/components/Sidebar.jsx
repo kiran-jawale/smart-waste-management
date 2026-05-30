@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate, useLocation, Link } from "react-router-dom";
 import { logout } from "../redux/slices/authSlice";
@@ -6,11 +6,15 @@ import userService from "../services/user.service";
 
 const Sidebar = () => {
   const user = useSelector((state) => state.auth.user);
+
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const location = useLocation();
 
   const onDashboard = location.pathname === "/dashboard";
+
   const currentHash = location.hash;
 
   const handleLogout = async () => {
@@ -24,78 +28,99 @@ const Sidebar = () => {
     }
   };
 
-  const activeClass = "bg-green-600 text-white font-bold";
-  const inactiveClass = "text-gray-300 hover:bg-gray-700 hover:text-white";
-  const baseNavLinkClass =
-    "block px-4 py-3 rounded-lg transition-colors duration-200";
+  const activeClass = "bg-emerald-600 text-white shadow-md";
 
-  const activeSubLink = "text-green-400 font-bold";
-  const inactiveSubLink = "text-gray-400 hover:text-green-400";
+  const inactiveClass = "text-slate-300 hover:bg-slate-800 hover:text-white";
+
+  const baseNavLinkClass =
+    "block px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200";
+
+  const activeSubLink = "text-emerald-400 font-semibold";
+
+  const inactiveSubLink = "text-slate-400 hover:text-emerald-400";
 
   return (
-    <div className="w-64 h-full bg-gray-900 text-white flex flex-col fixed shadow-lg z-50">
-      <div className="p-5 border-b border-gray-700">
-        <h2 className="text-xl font-bold truncate">{user.name}</h2>
-        <p className="text-sm text-gray-400 truncate">{user.email}</p>
-        <p className="text-xs font-semibold text-green-400 capitalize mt-2">
+    <aside className="fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-slate-800 bg-[#0f172a] text-white shadow-2xl">
+      <div className="border-b border-slate-800 p-6">
+        <h2 className="truncate text-lg font-semibold">{user.name}</h2>
+
+        <p className="mt-1 truncate text-sm text-slate-400">{user.email}</p>
+
+        <div className="mt-4 inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold capitalize text-emerald-400">
           {user.role}
-        </p>
+        </div>
       </div>
 
-      <nav className="flex-grow p-4 space-y-2">
+      <nav className="flex-1 space-y-2 overflow-y-auto p-4">
         <NavLink
           to="/dashboard"
           className={({ isActive }) =>
             `${baseNavLinkClass} ${isActive ? activeClass : inactiveClass}`
           }
         >
-          Dashboard (Work)
+          Dashboard
         </NavLink>
 
         {onDashboard &&
           (user.role === "admin" || user.role === "collector") && (
-            <div className="pl-4 space-y-2 border-l-2 border-gray-700 ml-4">
-              {/* Collector Links */}
+            <div className="ml-4 space-y-3 border-l border-slate-700 pl-4">
               {user.role === "collector" && (
                 <Link
                   to="/dashboard#create-report"
-                  className={`${currentHash === "#create-report" || (onDashboard && currentHash === "") ? activeSubLink : inactiveSubLink} block py-1`}
+                  className={`block text-sm transition-colors ${
+                    currentHash === "#create-report" ||
+                    (onDashboard && currentHash === "")
+                      ? activeSubLink
+                      : inactiveSubLink
+                  }`}
                 >
-                  &#8227; Create Record
+                  Create Record
                 </Link>
               )}
+
               <Link
                 to="/dashboard#complaints"
-                className={`${
+                className={`block text-sm transition-colors ${
                   (user.role === "admin" &&
                     (currentHash === "#complaints" ||
                       (onDashboard && currentHash === ""))) ||
                   (user.role === "collector" && currentHash === "#complaints")
                     ? activeSubLink
                     : inactiveSubLink
-                } block py-1`}
+                }`}
               >
-                &#8227; Complaints
+                Complaints
               </Link>
+
               <Link
                 to="/dashboard#reports"
-                className={`${currentHash === "#reports" ? activeSubLink : inactiveSubLink} block py-1`}
+                className={`block text-sm transition-colors ${
+                  currentHash === "#reports" ? activeSubLink : inactiveSubLink
+                }`}
               >
-                &#8227; Waste Records
+                Waste Records
               </Link>
+
               {user.role === "admin" && (
                 <>
                   <Link
                     to="/dashboard#users"
-                    className={`${currentHash === "#users" ? activeSubLink : inactiveSubLink} block py-1`}
+                    className={`block text-sm transition-colors ${
+                      currentHash === "#users" ? activeSubLink : inactiveSubLink
+                    }`}
                   >
-                    &#8227; User Management
+                    User Management
                   </Link>
+
                   <Link
                     to="/dashboard#create-report"
-                    className={`${currentHash === "#create-report" ? activeSubLink : inactiveSubLink} block py-1`}
+                    className={`block text-sm transition-colors ${
+                      currentHash === "#create-report"
+                        ? activeSubLink
+                        : inactiveSubLink
+                    }`}
                   >
-                    &#8227; Create Record
+                    Create Record
                   </Link>
                 </>
               )}
@@ -104,24 +129,39 @@ const Sidebar = () => {
 
         {onDashboard &&
           (user.role === "citizen" || user.role === "organisation") && (
-            <div className="pl-4 space-y-2 border-l-2 border-gray-700 ml-4">
+            <div className="ml-4 space-y-3 border-l border-slate-700 pl-4">
               <Link
                 to="/dashboard#my-reports"
-                className={`${currentHash === "#my-reports" || (onDashboard && currentHash === "") ? activeSubLink : inactiveSubLink} block py-1`}
+                className={`block text-sm transition-colors ${
+                  currentHash === "#my-reports" ||
+                  (onDashboard && currentHash === "")
+                    ? activeSubLink
+                    : inactiveSubLink
+                }`}
               >
-                &#8227; My Records
+                My Records
               </Link>
+
               <Link
                 to="/dashboard#my-complaints"
-                className={`${currentHash === "#my-complaints" ? activeSubLink : inactiveSubLink} block py-1`}
+                className={`block text-sm transition-colors ${
+                  currentHash === "#my-complaints"
+                    ? activeSubLink
+                    : inactiveSubLink
+                }`}
               >
-                &#8227; My Complaints
+                My Complaints
               </Link>
+
               <Link
                 to="/dashboard#file-complaint"
-                className={`${currentHash === "#file-complaint" ? activeSubLink : inactiveSubLink} block py-1`}
+                className={`block text-sm transition-colors ${
+                  currentHash === "#file-complaint"
+                    ? activeSubLink
+                    : inactiveSubLink
+                }`}
               >
-                &#8227; File a Complaint
+                File Complaint
               </Link>
             </div>
           )}
@@ -134,6 +174,7 @@ const Sidebar = () => {
         >
           Profile
         </NavLink>
+
         <NavLink
           to="/settings"
           className={({ isActive }) =>
@@ -144,15 +185,15 @@ const Sidebar = () => {
         </NavLink>
       </nav>
 
-      <div className="p-4 border-t border-gray-700">
+      <div className="border-t border-slate-800 p-4">
         <button
           onClick={handleLogout}
-          className="w-full px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          className="w-full rounded-2xl bg-red-600 px-4 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-red-700"
         >
           Logout
         </button>
       </div>
-    </div>
+    </aside>
   );
 };
 

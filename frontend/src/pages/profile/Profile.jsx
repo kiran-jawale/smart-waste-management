@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { useSelector } from "react-redux";
 import Container from "../../components/Container";
 
@@ -8,18 +8,28 @@ const Profile = () => {
   if (!user) {
     return (
       <Container>
-        <div>Loading profile...</div>
+        <div className="flex items-center justify-center rounded-3xl border border-gray-200 bg-white py-20 text-lg font-medium text-gray-600 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          Loading profile...
+        </div>
       </Container>
     );
   }
 
   return (
     <Container>
-      <div className="p-8 md:p-10 bg-white dark:bg-gray-800 rounded-2xl shadow-xl">
-        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-          My Profile
-        </h1>
-        <div className="space-y-6">
+      <div className="rounded-3xl border border-gray-200 bg-white p-8 md:p-10 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="mb-8 border-b border-gray-200 pb-5 dark:border-slate-700">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            My Profile
+          </h1>
+
+          <p className="mt-2 text-sm text-gray-500 dark:text-slate-400">
+            Personal and account information associated with your SmartPeepal
+            profile.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <InfoRow label="Name" value={user.name} />
           <InfoRow label="Email" value={user.email} />
           <InfoRow label="Role" value={user.role} />
@@ -34,13 +44,14 @@ const Profile = () => {
 };
 
 const InfoRow = ({ label, value }) => (
-  <div className="flex flex-col p-4 border-b border-gray-200 dark:border-gray-700">
-    <span className="text-sm font-medium text-gray-500 dark:text-gray-400 ">
+  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5 dark:border-slate-700 dark:bg-slate-900">
+    <span className="text-xs font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
       {label}
     </span>
-    <span className="text-lg font-semibold text-gray-900 dark:text-white">
+
+    <p className="mt-2 break-words text-sm font-medium text-gray-800 dark:text-gray-100">
       {value}
-    </span>
+    </p>
   </div>
 );
 

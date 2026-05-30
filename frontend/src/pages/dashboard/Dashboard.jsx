@@ -11,9 +11,13 @@ const Dashboard = () => {
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div
-          className={`text-2xl ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+          className={`rounded-2xl border px-6 py-4 text-lg font-medium shadow-sm ${
+            theme === "dark"
+              ? "border-slate-700 bg-slate-800 text-white"
+              : "border-gray-200 bg-white text-gray-900"
+          }`}
         >
           Loading user data...
         </div>
@@ -31,7 +35,13 @@ const Dashboard = () => {
       return <UserDashboard user={user} />;
     default:
       return (
-        <div className={`${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+        <div
+          className={`rounded-2xl border px-6 py-4 text-lg font-medium ${
+            theme === "dark"
+              ? "border-slate-700 bg-slate-800 text-white"
+              : "border-gray-200 bg-white text-gray-900"
+          }`}
+        >
           Invalid user role.
         </div>
       );

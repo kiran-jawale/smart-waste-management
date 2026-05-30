@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../redux/slices/authSlice";
 import userService from "../../../services/user.service";
@@ -48,27 +48,35 @@ const BasicSettingsForm = () => {
     "mt-1 block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all";
 
   return (
-    <div className="p-8 md:p-10 bg-white dark:bg-gray-800 rounded-2xl shadow-xl">
-      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-        Basic Settings
-      </h1>
+    <div className="rounded-3xl border border-gray-200 bg-white p-8 md:p-10 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      <div className="mb-8 border-b border-gray-200 pb-5 dark:border-slate-700">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Basic Settings
+        </h1>
+
+        <p className="mt-2 text-sm text-gray-500 dark:text-slate-400">
+          Manage your personal information and service preferences.
+        </p>
+      </div>
 
       {error && (
-        <div className="p-3 mb-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
           {error}
         </div>
       )}
+
       {success && (
-        <div className="p-3 mb-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
           {success}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-lg">
+      <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
             Full Name
           </label>
+
           <input
             name="name"
             type="text"
@@ -78,10 +86,12 @@ const BasicSettingsForm = () => {
             className={inputStyles}
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
             Email
           </label>
+
           <input
             name="email"
             type="email"
@@ -91,10 +101,12 @@ const BasicSettingsForm = () => {
             className={inputStyles}
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
             Contact Number
           </label>
+
           <input
             name="contact"
             type="tel"
@@ -104,10 +116,12 @@ const BasicSettingsForm = () => {
             className={inputStyles}
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
             Full Address
           </label>
+
           <input
             name="address"
             type="text"
@@ -117,10 +131,12 @@ const BasicSettingsForm = () => {
             className={inputStyles}
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
             Area Code
           </label>
+
           <select
             name="areacode"
             value={formData.areacode}
@@ -134,11 +150,13 @@ const BasicSettingsForm = () => {
             ))}
           </select>
         </div>
+
         {user.role === "organisation" && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-300">
               Organisation Type (e.g., Hospital, School)
             </label>
+
             <input
               name="status"
               type="text"
@@ -153,7 +171,15 @@ const BasicSettingsForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full sm:w-auto px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 disabled:bg-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+          className="
+          inline-flex items-center justify-center
+          rounded-2xl bg-emerald-600 px-6 py-3
+          text-sm font-semibold text-white
+          shadow-sm transition-all duration-200
+          hover:bg-emerald-700
+          disabled:cursor-not-allowed disabled:opacity-60
+          focus:outline-none focus:ring-2 focus:ring-emerald-500
+        "
         >
           {loading ? "Saving..." : "Save Changes"}
         </button>

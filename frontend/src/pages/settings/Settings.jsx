@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Container from "../../components/Container";
 import BasicSettingsForm from "./parts/BasicSettingsForm";
 import ChangePasswordForm from "./parts/ChangePasswordForm";
@@ -13,26 +13,40 @@ const Settings = () => {
 
   return (
     <Container>
-      <div className="mb-6">
-        <div className="border-b border-gray-200 dark:border-gray-700">
-          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+      <div className="space-y-8">
+        <div
+          className="
+          rounded-3xl border border-gray-200 bg-white p-2 shadow-sm
+          dark:border-slate-700 dark:bg-slate-800
+        "
+        >
+          <nav className="flex flex-col gap-2 sm:flex-row" aria-label="Tabs">
             <button
               onClick={() => setIsBasicView(true)}
-              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${isBasicView ? activeTab : inactiveTab}`}
+              className={`rounded-2xl px-5 py-3 text-sm font-medium transition-all duration-200 ${
+                isBasicView
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "text-gray-600 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-700"
+              }`}
             >
               Basic Settings
             </button>
+
             <button
               onClick={() => setIsBasicView(false)}
-              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${!isBasicView ? activeTab : inactiveTab}`}
+              className={`rounded-2xl px-5 py-3 text-sm font-medium transition-all duration-200 ${
+                !isBasicView
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "text-gray-600 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-700"
+              }`}
             >
               Change Password
             </button>
           </nav>
         </div>
-      </div>
 
-      {isBasicView ? <BasicSettingsForm /> : <ChangePasswordForm />}
+        {isBasicView ? <BasicSettingsForm /> : <ChangePasswordForm />}
+      </div>
     </Container>
   );
 };

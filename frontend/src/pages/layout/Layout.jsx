@@ -35,9 +35,15 @@ const Layout = () => {
 
   if (!authChecked) {
     return (
-      <div className={`min-h-screen ${theme === "dark" ? "dark" : ""}`}>
-        <div className="flex justify-center items-center h-screen bg-gray-50 dark:bg-gray-900">
-          <div className="text-2xl dark:text-white">Loading...</div>
+      <div className={`${theme === "dark" ? "dark" : ""}`}>
+        <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-[#0f172a]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
+
+            <div className="text-lg font-medium text-gray-700 dark:text-slate-200">
+              Loading...
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -45,20 +51,24 @@ const Layout = () => {
 
   return (
     <div className={`min-h-screen ${theme === "dark" ? "dark" : ""}`}>
-      <div className="flex">
+      <div className="flex bg-gray-50 dark:bg-[#0f172a]">
         {authStatus && <Sidebar />}
 
         <div
-          className={`flex-grow ${
-            authStatus ? "ml-64" : "ml-0"
-          } transition-all duration-300`}
+          className={`flex min-h-screen flex-1 flex-col transition-all duration-300 ${
+            authStatus ? "ml-72" : "ml-0"
+          }`}
         >
           <Header />
+
           <main
-            className={`${theme === "dark" ? "bg-gray-900" : "bg-gray-50"} p-8`}
+            className={`flex-1 px-4 py-6 md:px-8 ${
+              theme === "dark" ? "bg-[#0f172a]" : "bg-gray-50"
+            }`}
           >
             <Outlet />
           </main>
+
           <Footer />
         </div>
       </div>

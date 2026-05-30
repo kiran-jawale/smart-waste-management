@@ -9,44 +9,50 @@ const Contact = () => {
 
   return (
     <Container>
-      <div
-        className={`p-8 md:p-10 bg-white dark:bg-gray-800 rounded-2xl shadow-xl`}
-      >
-        <h1
-          className={`text-4xl font-bold mb-4 text-center ${
-            theme === "dark" ? "text-white" : "text-gray-900"
-          }`}
-        >
-          {title}
-        </h1>
-        <p
-          className={`text-lg text-center leading-relaxed mb-10 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
-          }`}
-        >
-          {text}
-        </p>
+      <div className="rounded-3xl border border-gray-200 bg-white p-8 md:p-10 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1
+            className={`text-3xl md:text-4xl font-bold tracking-tight ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
+          >
+            {title}
+          </h1>
 
-        <div className="max-w-md mx-auto space-y-4">
+          <p
+            className={`mt-4 text-base md:text-lg leading-relaxed ${
+              theme === "dark" ? "text-slate-300" : "text-gray-600"
+            }`}
+          >
+            {text}
+          </p>
+        </div>
+
+        <div className="mx-auto mt-12 grid max-w-3xl gap-5 md:grid-cols-2">
           {details.map((item) => (
             <div
               key={item.name}
-              className="flex flex-col p-4 bg-gray-100 dark:bg-gray-700 rounded-lg"
+              className={`rounded-2xl border p-5 transition-colors duration-200 ${
+                theme === "dark"
+                  ? "border-slate-700 bg-slate-900"
+                  : "border-gray-200 bg-gray-50"
+              }`}
             >
               <span
-                className={`text-sm font-medium ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-500"
+                className={`text-xs font-semibold uppercase tracking-wide ${
+                  theme === "dark" ? "text-emerald-400" : "text-emerald-600"
                 }`}
               >
                 {item.name}
               </span>
-              <span
-                className={`text-lg font-semibold ${
-                  theme === "dark" ? "text-white" : "text-gray-900"
+
+              <p
+                className={`mt-2 text-sm font-medium break-words ${
+                  theme === "dark" ? "text-white" : "text-gray-800"
                 }`}
               >
                 {item.value}
-              </span>
+              </p>
             </div>
           ))}
         </div>

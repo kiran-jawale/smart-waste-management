@@ -8,22 +8,24 @@ const ModalContainer = ({ isOpen, onClose, children }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-70 z-40 flex justify-center items-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onClick={onClose}
     >
       <div
-        className={`p-6 md:p-8 ${
-          theme === "dark" ? "bg-gray-800" : "bg-white"
-        } rounded-2xl shadow-xl w-full max-w-4xl relative max-h-[90vh] overflow-y-auto`}
+        className={`relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl border shadow-2xl p-6 md:p-8 transition-all duration-300 ${
+          theme === "dark"
+            ? "bg-slate-800 border-slate-700"
+            : "bg-white border-gray-200"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className={`absolute top-4 right-4 text-3xl font-bold ${
+          className={`absolute top-5 right-5 h-10 w-10 rounded-full flex items-center justify-center text-2xl transition-colors ${
             theme === "dark"
-              ? "text-gray-400 hover:text-white"
-              : "text-gray-500 hover:text-gray-800"
-          } transition-colors`}
+              ? "text-slate-400 hover:bg-slate-700 hover:text-white"
+              : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+          }`}
         >
           &times;
         </button>

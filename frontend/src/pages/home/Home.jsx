@@ -7,9 +7,8 @@ import { content } from "../../constants/content";
 
 const Home = () => {
   const { whatWhy } = content.home;
-
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-hidden">
       <HeroSection />
       <WhatWhySection
         title={whatWhy.title}

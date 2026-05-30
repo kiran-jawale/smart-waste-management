@@ -32,35 +32,61 @@ const Login = ({ onToggleView }) => {
       setLoading(false);
     }
   };
-
-  const inputStyles = `mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${theme === "dark" ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 bg-gray-50 text-gray-900"}`;
+  const inputStyles = `mt-2 block w-full rounded-2xl border px-4 py-3 text-sm shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+    theme === "dark"
+      ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+      : "border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+  }`;
 
   return (
     <div
-      className={`p-8 space-y-6 ${theme === "dark" ? "bg-gray-800" : "bg-white"} rounded-2xl shadow-xl transition-all duration-300`}
+      className={`space-y-6 rounded-3xl border p-8 shadow-xl transition-all duration-300 ${
+        theme === "dark"
+          ? "border-slate-700 bg-slate-900"
+          : "border-gray-200 bg-white"
+      }`}
     >
-      <h2
-        className={`text-3xl font-bold text-center ${theme === "dark" ? "text-white" : "text-gray-900"}`}
-      >
-        Sign in
-      </h2>
+      <div className="text-center">
+        <h2
+          className={`text-3xl font-bold tracking-tight ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}
+        >
+          Sign in
+        </h2>
+
+        <p
+          className={`mt-2 text-sm ${
+            theme === "dark" ? "text-slate-400" : "text-gray-500"
+          }`}
+        >
+          Access your SmartPeepal account
+        </p>
+      </div>
 
       {error && (
         <div
-          className={`p-3 ${theme === "dark" ? "bg-red-900 border-red-600 text-red-200" : "bg-red-100 border-red-400 text-red-700"} border rounded-lg`}
+          className={`rounded-2xl border px-4 py-3 text-sm ${
+            theme === "dark"
+              ? "border-red-800 bg-red-950/40 text-red-300"
+              : "border-red-200 bg-red-50 text-red-700"
+          }`}
         >
           {error}
         </div>
       )}
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
+      <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="loginIdentifier"
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium ${
+              theme === "dark" ? "text-slate-300" : "text-gray-700"
+            }`}
           >
             Email or Name
           </label>
+
           <input
             id="loginIdentifier"
             type="text"
@@ -74,10 +100,13 @@ const Login = ({ onToggleView }) => {
         <div>
           <label
             htmlFor="password"
-            className={`block text-sm font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            className={`block text-sm font-medium ${
+              theme === "dark" ? "text-slate-300" : "text-gray-700"
+            }`}
           >
             Password
           </label>
+
           <input
             id="password"
             type="password"
@@ -91,19 +120,23 @@ const Login = ({ onToggleView }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex justify-center py-3 px-4 rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+          className="flex w-full items-center justify-center rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-emerald-500"
         >
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>
 
       <p
-        className={`text-sm text-center ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}
+        className={`text-center text-sm ${
+          theme === "dark" ? "text-slate-400" : "text-gray-600"
+        }`}
       >
         Don't have an account?{" "}
         <button
           onClick={onToggleView}
-          className={`font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-green-500 rounded ${theme === "dark" ? "text-green-400" : "text-green-600"}`}
+          className={`rounded px-1 font-semibold transition-colors hover:underline focus:outline-none ${
+            theme === "dark" ? "text-emerald-400" : "text-emerald-600"
+          }`}
         >
           Register here
         </button>

@@ -52,9 +52,11 @@ const AdminDashboard = ({ user }) => {
   if (loading)
     return (
       <div
-        className={`${
-          theme === "dark" ? "text-white" : "text-gray-900"
-        } text-center p-10`}
+        className={`rounded-3xl border px-6 py-10 text-center text-lg font-medium shadow-sm ${
+          theme === "dark"
+            ? "border-slate-700 bg-slate-800 text-white"
+            : "border-gray-200 bg-white text-gray-900"
+        }`}
       >
         Loading dashboard...
       </div>
@@ -62,13 +64,23 @@ const AdminDashboard = ({ user }) => {
 
   return (
     <div className="space-y-8">
-      <h1
-        className={`text-4xl font-bold ${
-          theme === "dark" ? "text-white" : "text-gray-900"
-        }`}
-      >
-        Admin Dashboard
-      </h1>
+      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <h1
+          className={`text-3xl font-bold tracking-tight ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}
+        >
+          Admin Dashboard
+        </h1>
+
+        <p
+          className={`mt-2 text-sm ${
+            theme === "dark" ? "text-slate-400" : "text-gray-500"
+          }`}
+        >
+          Manage users, waste records, and citizen complaints centrally.
+        </p>
+      </div>
 
       {view === "complaints" && (
         <ComplaintManagement

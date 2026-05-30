@@ -14,62 +14,81 @@ const ReportDetailModal = ({ report, onClose }) => {
 
   return (
     <ModalContainer isOpen={!!report} onClose={onClose}>
-      <h2
-        className={`text-xl font-semibold mb-5 ${
-          theme === "dark" ? "text-white" : "text-gray-900"
-        }`}
-      >
-        Report Details
-      </h2>
+      <div className="space-y-6">
+        <div className="border-b border-gray-200 dark:border-slate-700 pb-4">
+          <h2
+            className={`text-2xl font-semibold tracking-tight ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
+          >
+            Waste Collection Report
+          </h2>
 
-      {imageUrl && (
-        <div className="mb-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-          <img
-            src={imageUrl}
-            alt="Report"
-            className="rounded-lg w-full h-96 object-contain"
+          <p
+            className={`mt-1 text-sm ${
+              theme === "dark" ? "text-slate-400" : "text-gray-500"
+            }`}
+          >
+            Waste management record and operational details.
+          </p>
+        </div>
+
+        {imageUrl && (
+          <div
+            className={`rounded-2xl overflow-hidden border ${
+              theme === "dark"
+                ? "bg-slate-900 border-slate-700"
+                : "bg-gray-100 border-gray-200"
+            }`}
+          >
+            <img
+              src={imageUrl}
+              alt="Report"
+              className="w-full h-96 object-contain"
+            />
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <InfoRow label="Category" value={report.category} />
+          <InfoRow label="Status" value={report.status} />
+          <InfoRow label="Area Code" value={report.areacode} />
+          <InfoRow
+            label="Source Code"
+            value={report.sourceCode || "N/A (Area-wide)"}
+          />
+          <InfoRow label="Reason" value={report.reason || "N/A"} />
+          <InfoRow
+            label="Collection Time"
+            value={
+              report.collectionTime
+                ? new Date(report.collectionTime).toLocaleString()
+                : "N/A"
+            }
+          />
+          <InfoRow
+            label="Departure Time"
+            value={
+              report.departureTime
+                ? new Date(report.departureTime).toLocaleString()
+                : "N/A"
+            }
           />
         </div>
-      )}
-
-      <div className="space-y-3">
-        <InfoRow label="Category" value={report.category} />
-        <InfoRow label="Status" value={report.status} />
-        <InfoRow label="Area Code" value={report.areacode} />
-        <InfoRow
-          label="Source Code"
-          value={report.sourceCode || "N/A (Area-wide)"}
-        />
-        <InfoRow label="Reason" value={report.reason || "N/A"} />
-        <InfoRow
-          label="Collection Time"
-          value={
-            report.collectionTime
-              ? new Date(report.collectionTime).toLocaleString()
-              : "N/A"
-          }
-        />
-        <InfoRow
-          label="Departure Time"
-          value={
-            report.departureTime
-              ? new Date(report.departureTime).toLocaleString()
-              : "N/A"
-          }
-        />
       </div>
     </ModalContainer>
   );
 };
 
 const InfoRow = ({ label, value }) => (
-  <div className="flex flex-col border-b border-gray-200 dark:border-gray-700 pb-2">
-    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 capitalize">
+  <div className="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
+    <span className="text-xs font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
       {label}
     </span>
-    <span className="text-base font-medium text-gray-900 dark:text-white">
+
+    <p className="mt-2 text-sm leading-relaxed text-gray-800 dark:text-gray-100 break-words">
       {value}
-    </span>
+    </p>
   </div>
 );
 
