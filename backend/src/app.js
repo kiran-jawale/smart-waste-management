@@ -38,13 +38,14 @@ import reportRouter from './routes/wasteReport.route.js';
 import complaintRouter from './routes/complaint.route.js';
 import adminRouter from './routes/admin.route.js';
 import seedRouter from './routes/seed.route.js';
+import insightsRouter from './routes/insights.route.js';
 
 app.use('/api/v2/users', userRouter);
 app.use('/api/v2/reports', reportRouter);
 app.use('/api/v2/complaints', complaintRouter);
 app.use('/api/v2/admin', adminRouter);
 app.use('/api/v2/seed', seedRouter);
-
+app.use('/api/v2/insights', insightsRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
