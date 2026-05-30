@@ -20,7 +20,7 @@ const HowToUseSection = () => {
           {steps.map((step) => (
             <div
               key={step.name}
-              className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
+              className="rounded-3xl border border-gray-200 bg-white p-6 gap-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-lg font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
                 {step.name}
